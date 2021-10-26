@@ -1,0 +1,91 @@
+-> Fisierul sursa main.c:
+Am deschis fisierele de input si de output si am alocat un pointer 
+la tabela hash, care contine un vector de liste de lungimea primului
+argument primit in linia de comanda. Am citit din fisierul de input 
+in variabila option numele comenzii, iar in functie de aceasta 
+am citit restul datelor din fisier cu care am apelat functia
+corespunzatoare fiecarei comenzi. In final, am inchis fisierele 
+si am eliberat intreaga memorie alocata in cadrul tabelei hash.
+
+Functia DistrInfo elibereaza memoria alocata pentru o variabila
+de tip TSite si pentru campurile acesteia.
+
+Functia cmp_key compara doua siruri de caractere, primeste ca 
+parametru doi void * care reprezinta o variabila de tip TSite si 
+altul corespunzator numelui unui site.
+
+
+-> Fisierul sursa functiiHash.c:
+Functia IniTH aloca si initializeaza un pointer la tabela hash, 
+vectorul de liste de dimensiunea primita ca parametru si atribuie 
+functia de hash campului corespunzator, returneaza pointerul alocat.
+
+Functia DistrTH primeste un pointer la adresa tabelei hash, parcurge
+toate listele existente si distruge informatia din fiecare celula,
+respectiv celula alocata. In final se elibereaza vectorul de liste si 
+pointerul corespunzator tabelei hash.
+
+Functia InsTH primeste ca parametri doi void* ce reprezinta numele si adresa 
+IP ale unui site. Verifica daca exista deja un site cu acelasi nume, prin
+generarea codului hash aferent numelui site-ului si parcurgerea listei 
+respective. Daca site-ul nu exista, se aloca dinamic o variabila TSite si 
+campurile acesteia in care se copiaza numele si adresa IP si se introduc 
+in lista corespunzatoare codului hash, apeland functia Put_key.
+Functia intoarce 1 in caz de succes si 0 in caz de esec.
+
+Functia codHash calculeaza restul impartirii sumei caracterelor unui sir la
+numarul maxim de liste din vectorul din tabela hash.
+
+In intreaga implementare am ales folosirea buclei do while pentru a nu fi 
+nevoita sa testez primul camp al unei liste, conditia fiind 
+testata abia dupa avans. 
+
+
+-> Fisierul sursa functiiTema.c:
+Functia Put_key insereaza in mod ordonat dupa numele site-ului in lista dublu
+inlantuita primita ca parametru. Se aloca o celula auxiliara care va contine
+informatia care se doreste a fi inserata. Am luat in considerare cazurile:
+    -> lista este vida, celula aux va deveni prima din lista si se refac
+legaturile;
+Pentru celelalte cazuri, se cauta prima celula care are key-ul
+mai mare decat cel care trebuie inserat, pentru a face inserare
+inaintea ei. 
+    -> daca la sfarsitul cautarii celula inaintea careia vrem sa inseram
+corespunde cu inceputul listei, avem alte 2 cazuri: inserare la sfarsit, 
+sau la inceput, care se deosebeste prin faptul ca s-a iesit din bucla 
+de cautare dupa verificarea primei celule.
+    -> altfel, se face inserare in interiorul listei, fara sa se modifice.
+inceputul/sfarsitul listei.
+Functia intoarce 1 in caz de succes si 0 in caz de esec.
+
+Functis Remove_key cauta in tabela hash in lista corespunzatoare codului hash
+generat site-ul cu numele primit ca parametru. Daca acesta exista, se face
+eliminarea celulei respective din lista. Am luat in considerare urmatoarele cazuri:
+    -> daca se elimina singurul element al listei;
+    -> daca se elimina primul element al listei;
+    -> daca se elimina ultimul element al listei;
+    -> daca se elimina celula din interiorul listei, fara sa se modifice
+inceputul sau sfarsitul.
+Pentru toate cazurile am refacut legaturile in cadrul listei, am
+eliberat memoria alocata pentru informatie si campul celulei de lista.
+Functia intoarce 1 in caz de succes si 0 in caz de esec.
+
+Functia Find_key parcurge lista corespunzatoare codului hash generat de 
+numele site-ului primit ca parametru si cauta site-ul cu acel nume, folosind 
+o functie de comparatie. Daca acesta exista in lista, functia afiseaza 
+in fisierul de output mesajul "True", altfel afiseaza "False".
+
+Functia Get_key parcurge lista corespunzatoare codului hash generat de 
+numele site-ului primit ca parametru si cauta site-ul cu acel nume, folosind 
+o functie de comparatie. Daca acesta exista in lista, afiseaza adresa IP
+corespunzatoare acestuia in fisierul de output, altfel afiseaza NULL
+
+Functia Print_bucket parcurge lista corespunzatoare codului hash primit
+ca parametru, daca acesta este mai mic sau egal cu numarul maxim de lsite.
+Daca lista este vida, in fisierul de output se afiseaza mesajul corespunzator.
+Altfel, se pargurge lista si se afiseaza in fisierul de oputul
+toate valorile adreselor IP din acea lista, folosind functia Afi_site.
+
+Functia Print parcurge vectorul de liste al tabelei hash. Daca lista exista, 
+se afiseaza in fisierul de output numarul codului hash urmat de adresele IP
+ale tuturor site-urilor din acea lista, apeland functia precedenata.

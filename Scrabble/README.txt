@@ -1,6 +1,3 @@
-//DINU ANDREEA SABINA- 312CB
-//PC- TEMA 2
-
 Am declarat matricea board[BOARD_SIZE][BOARD_SIZE], care reprezinta tabla de joc, ca variabila globala(abatere permisa).
 
 Functia value_of_the_word() calculeaza scorul cuvantului primit ca parametru, fara a lua in considerare conditia de bonus. Pentru a tine informatiile pentru scorurile fiecarei litere, am initializat un vector cu toate valorile puse in ordine alfabetica. Pentru a afla la ce index in vector se afla scorul unei litere, am substras valoarea ‘A’ din litera cautata. Variabila wl retine lungimea cuvantului (conversie pentru ca strlen(word) returneaza size_t  si nu poate fi comparat cu int i).

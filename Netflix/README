@@ -202,8 +202,3 @@ Functia is_integer() returneaza 1 daca primul caracter din sirul
 primit ca parametru este cifra, 0 altfel. Este folosita pentru comanda SHOW, pentru
 a stii ce structura se doreste a fi afisata.
 
--------PUNCTAJ PE CHECKER LOCAL-------
-Total: [135/135]
-Failed VALGRIND tests
-
-                                           Bonus: [00/20]
